@@ -41,4 +41,23 @@ export default class AuthService {
             console.error(e.response?.data?.message);
         }
     }
+
+    static async SendEmailToServer(email) {
+        try {
+            const response = await $api.post(`${API_URL}/auth/password-reset`, { email });
+            return response;
+        } catch (e) {
+            console.error(e.response?.data?.message);
+        }
+    }
+
+    static async SendNewPassword(password, confirm_token) {
+        try {
+            const response = await $api.post(`${API_URL}/auth/password-reset/${confirm_token}`, { password });
+            return response;
+        } catch (e) {
+            console.error(e.response?.data?.message);
+        }
+    }
+
 }
