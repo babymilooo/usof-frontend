@@ -1,0 +1,26 @@
+.navbar {
+    height: 50px;
+    width: 100vw;
+    background: whitesmoke;
+    display: flex;
+    justify-content: center; /* Равномерное распределение элементов по ширине */
+    align-items: center; /* Выравнивание элементов по вертикали по центру */
+    padding: 14px; /* Пример отступа */
+}
+
+.navbar__links {
+    display: flex;
+    align-items: center; /* Выравнивание элементов по вертикали по центру */
+}
+
+.transparentLink {
+    text-decoration: none; /* Убрать подчеркивание для ссылки */
+    color: inherit; /* Использовать цвет по умолчанию для текста */
+    margin-left: 40px; /* Отступ между кнопками */
+    font-weight: bold; /* Делаем текст жирным */
+    font-size: 14px;
+}
+
+.transparentLink:hover {
+    cursor: pointer; /* Изменение курсора при наведении */
+}
