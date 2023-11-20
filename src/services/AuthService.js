@@ -54,7 +54,13 @@ export default class AuthService {
     static async SendNewPassword(password, confirm_token) {
         try {
             const response = await $api.post(`${API_URL}/auth/password-reset/${confirm_token}`, { password });
-            return response;
+            console.log(response);
+            if (response.status === 200) {
+                return response;
+            }
+            else {
+                return response.data.message;
+            }
         } catch (e) {
             console.error(e.response?.data?.message);
         }

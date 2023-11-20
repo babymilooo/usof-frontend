@@ -1,4 +1,5 @@
 import About from "../pages/About";
+import CheckEmail from "../pages/CheckEmail";
 import Errors from "../pages/Errors";
 import Login from "../pages/Login";
 import PostIdPage from "../pages/PostIdPage";
@@ -20,5 +21,6 @@ export const publicRoutes = [
     { path: '/login', component: Login, exact: true },
     { path: '/registration', component: Register, exact: true },
     { path: '/forgotPassword', component: forgetPassword, exact: true },
+    { path: '/checkEmail', component: CheckEmail, exact: true },
     { path: '/password-reset/:token', component: RefreshPassword, exact: true }
 ]

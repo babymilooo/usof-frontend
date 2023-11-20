@@ -9,9 +9,7 @@ const AppRouter = () => {
 
     console.log("Is Authenticated:", isAuth);
     return (
-        <div>
-            {isAuth && <Navbar />}
-            
+        <div className='bg-#607d8b'>
             <Routes>
                 {isAuth ? (
                     privateRoutes.map(({ path, component }) =>
