@@ -24,7 +24,7 @@ const Register = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen">
-            <Card color="transparent" shadow={false}>
+            <Card color="transparent" shadow={false} className="bg-blue-gray-50 p-8 shadow-md">
                 <Typography variant="h4" color="blue-gray">
                     Sign Up
                 </Typography>

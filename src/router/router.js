@@ -1,5 +1,7 @@
 import About from "../pages/About";
 import CheckEmail from "../pages/CheckEmail";
+import CreatePost from "../pages/CreatePost";
+import EditProfile from "../pages/EditProfile";
 import Errors from "../pages/Errors";
 import Login from "../pages/Login";
 import PostIdPage from "../pages/PostIdPage";
@@ -15,6 +17,8 @@ export const privateRoutes = [
     { path: '/posts/:id', component: PostIdPage, exact: true },
     { path: '/error', component: Errors, exact: true },
     { path: '/profile', component: Profile, exact: true },
+    { path: '/profile/editProfile', component: EditProfile, exact: true },
+    { path: '/createPost', component: CreatePost, exact: true }
 ]
 
 export const publicRoutes = [

@@ -1,12 +1,11 @@
 import $api, { API_URL } from "../http";
 
-export default class FileService {
-    static async sendAvatar(formData) {
+export default class CommentService {
+    static async getAllLikesForComment(commentId) {
         try {
-            const response = await $api.patch(`${API_URL}/users/avatars`, formData)
+            const response = await $api.get(`${API_URL}/comments/${commentId}/like`);
             if (response.status === 200) {
                 console.log(response);
-                console.log('Аватарка успешно загружена');
                 return response;
             }
         } catch (e) {

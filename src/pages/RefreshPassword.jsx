@@ -36,7 +36,7 @@ const RefreshPassword = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen">
-            <Card color="transparent" shadow={false}>
+            <Card color="transparent" shadow={false} className="bg-blue-gray-50 p-8 shadow-md">
                 <div className="w-80 max-w-screen-lg sm:w-96 mx-auto"> {/* This wrapper ensures that all child elements have the same width */}
                     <Typography variant="h4" color="blue-gray">
                         Enter new password
