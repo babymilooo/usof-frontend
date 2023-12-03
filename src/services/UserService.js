@@ -36,4 +36,16 @@ export default class UserService {
             console.error(e.response?.data?.message);
         }
     }
+
+    static async getAllPost() {
+        try {
+            const response = await $api.get(`${API_URL}/posts`);
+            if (response.status === 200) {
+                console.log(response);
+                return response.data;
+            }
+        } catch (e) {
+            console.error(e.response?.data?.message);
+        }
+    }
 }

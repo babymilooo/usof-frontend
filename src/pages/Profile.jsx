@@ -77,13 +77,36 @@ const Profile = () => {
         setActiveTab(tabName);
     };
 
+    const handleDelete = async (postId) => {
+        try {
+            const response = await PostService.deletePost(postId);
+            console.log(response);
+
+            // Обновление состояния постов после удаления
+            setPosts(currentPosts => currentPosts.filter(post => post.id !== postId));
+        } catch (error) {
+            console.error("Ошибка при удалении поста:", error);
+            // Обработка ошибок при удалении
+        }
+    };
+
     const Posts = () => {
         if (loading) return <div>Загрузка...</div>;
         if (errorPost) return <div>Ошибка: {errorPost.message}</div>;
         if (!posts || posts.length === 0) return <div>Посты не найдены.</div>;
         return posts.map((post) => (
             <div key={post.id} className="border-b border-gray-200 mb-4 pb-4">
-                <h2 className="text-2xl font-semibold">{post.title}</h2>
+                <div className="flex justify-between">
+                    <h2 className="text-2xl font-semibold">{post.title}</h2>
+                    <div>
+                        <button className="mr-2">
+                            update
+                        </button>
+                        <button onClick={() => handleDelete(post.id)}>
+                            delete
+                        </button>
+                    </div>
+                </div>
                 <p className="text-gray-500">Статус: {post.status}</p>
                 <div className="flex justify-between">
                     <p className="text-gray-500">Лайков: {post.likesCount}</p> {/* Добавьте это */}
@@ -93,7 +116,6 @@ const Profile = () => {
             </div>
         ));
     };
-
 
     const Comments = () => {
         if (loading) return <div>Загрузка...</div>;
