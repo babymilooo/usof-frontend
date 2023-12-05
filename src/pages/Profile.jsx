@@ -8,6 +8,7 @@ import FileService from '../services/FileService';
 import { Link } from 'react-router-dom';
 import UserService from '../services/UserService';
 import PostService from '../services/PostService';
+import CommentService from '../services/CommentService';
 
 const Profile = () => {
     const user = useSelector(state => state.user);
@@ -56,7 +57,7 @@ const Profile = () => {
                 setLoading(false);
 
                 const commentWithLikesPromises = commentData.map(async comment => {
-                    const likesResponse = await PostService.getAllLikesForPost(comment.id);
+                    const likesResponse = await CommentService.getAllLikesForComment(comment.id);
                     const likesCount = likesResponse.data?.length || 0;
                     return { ...comment, likesCount };
                 });

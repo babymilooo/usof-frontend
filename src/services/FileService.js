@@ -5,7 +5,6 @@ export default class FileService {
         try {
             const response = await $api.patch(`${API_URL}/users/avatars`, formData)
             if (response.status === 200) {
-                console.log(response);
                 console.log('Аватарка успешно загружена');
                 return response;
             }

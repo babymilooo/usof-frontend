@@ -29,14 +29,14 @@ const Slidebar = () => {
         <>
             {isSidebarOpen && (
                 <div
-                    className={`fixed inset-0 bg-black bg-opacity-50 ${isSidebarOpen ? 'z-40' : '-z-10'}`}
+                    className={`fixed inset-0 bg-black bg-opacity-50 ${isSidebarOpen ? 'z-40' : 'z-20'}`}
                     onClick={() => dispatch(toggleSidebar())}
                 ></div >
             )}
 
             <div
                 className={`fixed top-0 right-0 w-64 h-full bg-white shadow-lg transform transition-transform ease-in-out duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}  z-30`}
-                style={{ zIndex: isSidebarOpen ? 50 : -1 }}
+                style={{ zIndex: isSidebarOpen ? 50 : 20 }}
             >
                 <nav>
                     <ul className="text-gray-700 px-4 py-4">

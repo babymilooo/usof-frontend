@@ -5,3 +5,23 @@
 body {
   @apply bg-gray-300;
 }
+
+.link-styling a {
+  @apply text-blue-500 underline;
+  /* Tailwind utility classes for link styling */
+}
+
+.post h1 {
+  @apply text-xl !important;
+  @apply font-bold !important;
+}
+
+.post h2 {
+  @apply text-lg !important;
+  @apply font-bold !important;
+}
+
+.post h3 {
+  @apply text-base !important;
+  @apply font-bold !important;
+}

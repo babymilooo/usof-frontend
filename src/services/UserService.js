@@ -5,7 +5,7 @@ export default class UserService {
         try {
             const response = await $api.patch(`${API_URL}/users/${profileData.id}`, profileData);
             if (response.status === 200) {
-                console.log(response);
+
                 return response;
             }
         } catch (e) {
@@ -17,7 +17,7 @@ export default class UserService {
         try {
             const response = await $api.get(`${API_URL}/posts/users/${userId}`);
             if (response.status === 200) {
-                console.log(response);
+
                 return response.data;
             }
         } catch (e) {
@@ -29,7 +29,7 @@ export default class UserService {
         try {
             const response = await $api.get(`${API_URL}/comments/${userId}`);
             if (response.status === 200) {
-                console.log(response);
+
                 return response.data;
             }
         } catch (e) {
@@ -37,15 +37,15 @@ export default class UserService {
         }
     }
 
-    static async getAllPost() {
+    static async getUser(userId) {
         try {
-            const response = await $api.get(`${API_URL}/posts`);
+            const response = await $api.get(`${API_URL}/users/${userId}`);
             if (response.status === 200) {
-                console.log(response);
-                return response.data;
+                return response;
             }
         } catch (e) {
             console.error(e.response?.data?.message);
         }
     }
+
 }

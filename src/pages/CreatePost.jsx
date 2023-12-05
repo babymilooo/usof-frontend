@@ -1,22 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
-// import 'draft-js/dist/Draft.css';
+import { EditorState, convertToRaw } from 'draft-js';
 import Navbar from '../components/UI/Navbars/MyNavbar';
 import Slidebar from '../components/UI/MySlidebars/Slidebar';
-import DraftButton from '../components/UI/MyButtons/DraftButton';
-import { Select, Option, Input } from "@material-tailwind/react";
-import Popup from './../components/UI/Selector/Selector';
+import { Input } from "@material-tailwind/react";
 import PostService from '../services/PostService';
 import AnimatedMulti from '../components/UI/Selector/MultiSelect';
+import DraftTextArea from '../components/UI/TextArea/DraftTextArea';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [categories, setSelectedItems] = useState([]);
-    const [content, setContent] = useState('');
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-    const currentStyle = editorState.getCurrentInlineStyle();
     const [borderColor, setBorderColor] = useState('border-custom-gray');
     const elementRef = useRef(null);
+    const navigate = useNavigate();
+    const handleSelectionChange = (selectedOptions) => {
+        setSelectedItems(selectedOptions);
+    };
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    };
 
     const handleClick = () => {
         setBorderColor('border-gray-800'); // Устанавливаем чёрную границу при клике
@@ -26,11 +31,6 @@ const CreatePost = () => {
         if (elementRef.current && !elementRef.current.contains(event.target)) {
             setBorderColor('border-custom-gray');
         }
-    };
-    const handleSelectionChange = (selectedOptions) => {
-        console.log(selectedOptions);
-        // Update the state in the parent component
-        setSelectedItems(selectedOptions);
     };
 
     useEffect(() => {
@@ -42,41 +42,32 @@ const CreatePost = () => {
         };
     }, []);
 
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-    };
-
-    const handleEditorChange = (newEditorState) => {
-        setEditorState(newEditorState);
-    };
-
-    // Функции для форматирования текста в редакторе
-    const toggleInlineStyle = (inlineStyle) => {
-        setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-    };
-
     const handleSubmit = async () => {
         console.log(editorState.getCurrentContent());
         const rawContentState = convertToRaw(editorState.getCurrentContent());
         const contentString = JSON.stringify(rawContentState);
-        console.log(contentString);
-        console.log(categories);
-        setContent(contentString);
-        if (title === null || '') {
-            alert("title");
+
+        if (!title) {
+            alert("Please enter a title.");
+            return; // Прекращаем выполнение, если title пуст
         }
-        if (content === null || '') {
-            alert("content");
+
+        // Проверка на пустоту содержимого редактора
+        if (!editorState.getCurrentContent().hasText()) {
+            alert("Please enter content.");
+            return; // Прекращаем выполнение, если content пуст
         }
-        if (categories === null || '') {
-            alert("categories");
+
+        if (!categories || categories.length === 0) {
+            alert("Please select at least one category.");
+            return; // Прекращаем выполнение, если categories пусты
         }
-        else {
-            console.log(title);
-            console.log(contentString);
-            console.log(categories);
-            const response = PostService.createPost(title, contentString, categories);
-            console.log(response);
+
+        // Если все проверки пройдены, отправляем данные
+        console.log(title, contentString, categories);
+        const response = await PostService.createPost(title, contentString, categories);
+        if (response.status === 200) {
+            navigate('/posts'); // Перенаправление при успешном ответе
         }
     };
 
@@ -99,42 +90,12 @@ const CreatePost = () => {
                             onChange={handleTitleChange} />
                     </div>
 
-                    <div ref={elementRef}
-                        className={`mt-4 p-4 border ${borderColor} rounded-lg`}
-                        onClick={handleClick}>
-                        <div>
-                            <div className="toolbar">
-                                <DraftButton
-                                    label="B"
-                                    style="BOLD"
-                                    onToggle={toggleInlineStyle}
-                                    active={currentStyle.has('BOLD')}
-                                />
-                                <DraftButton
-                                    label="I"
-                                    style="ITALIC"
-                                    onToggle={toggleInlineStyle}
-                                    active={currentStyle.has('ITALIC')}
-                                />
-                                <DraftButton
-                                    label="Underline"
-                                    style="UNDERLINE"
-                                    onToggle={toggleInlineStyle}
-                                    active={currentStyle.has('UNDERLINE')}
-                                />
-                                {/* Добавьте другие кнопки для блочных стилей */}
-                            </div>
-                            {/* Добавьте другие кнопки для стилей */}
-                        </div>
-
-                        {/* Редактор Draft.js */}
-                        <div className="Editor border p-2 rounded border-custom-gray">
-                            <Editor
-                                editorState={editorState}
-                                onChange={handleEditorChange}
-                            />
-                        </div>
-
+                    <div className={`mt-4 p-4 border ${borderColor} rounded-lg`}
+                        onClick={handleClick} ref={elementRef}>
+                        <DraftTextArea
+                            editorState={editorState}
+                            onEditorStateChange={setEditorState}
+                        />
                     </div>
                     <button onClick={handleSubmit} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Опубликовать
